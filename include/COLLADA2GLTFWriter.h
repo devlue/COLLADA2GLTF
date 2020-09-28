@@ -24,6 +24,7 @@ class Writer : public COLLADAFW::IWriter {
   GLTF::Node* _rootNode = NULL;
   float _assetScale;
   std::map<COLLADAFW::UniqueId, COLLADAFW::UniqueId> _materialEffects;
+  std::map<COLLADAFW::UniqueId, std::string> _materialName;
   std::map<COLLADAFW::UniqueId, GLTF::Material*> _effectInstances;
   std::map<COLLADAFW::UniqueId, GLTF::Camera*> _cameraInstances;
   std::map<COLLADAFW::UniqueId, GLTF::Mesh*> _meshInstances;

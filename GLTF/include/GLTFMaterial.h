@@ -43,10 +43,11 @@ class Material : public GLTF::Object {
   Material();
   virtual ~Material();
 
-  Material(const Material&) = delete;
-  Material& operator=(const Material&) = delete;
-  Material(Material&&) = delete;
-  Material& operator=(Material&&) = delete;
+  // Material(const Material&) = delete;
+  // Material& operator=(const Material&) = delete;
+  // Material(Material&&) = delete;
+  // Material& operator=(Material&&) = delete;
+  GLTF::Material* getInstancedEffect(std::string name);
 
   bool hasTexture();
   virtual std::string typeName();

@@ -322,7 +322,8 @@ bool COLLADA2GLTF::Writer::writeNodeToGroup(
         COLLADAFW::UniqueId materialId =
             materialBinding.getReferencedMaterial();
         COLLADAFW::UniqueId effectId = this->_materialEffects[materialId];
-        GLTF::Material* material = _effectInstances[effectId];
+        // GLTF::Material* material = _effectInstances[effectId];
+        GLTF::Material* material = _effectInstances[effectId]->getInstancedEffect(this->_materialName[materialId]);
         if (material->type == GLTF::Material::Type::MATERIAL_COMMON) {
           GLTF::MaterialCommon* materialCommon =
               (GLTF::MaterialCommon*)material;
@@ -402,7 +403,8 @@ bool COLLADA2GLTF::Writer::writeNodeToGroup(
           COLLADAFW::UniqueId materialId =
               materialBinding.getReferencedMaterial();
           COLLADAFW::UniqueId effectId = this->_materialEffects[materialId];
-          GLTF::Material* material = _effectInstances[effectId];
+          // GLTF::Material* material = _effectInstances[effectId];
+          GLTF::Material* material = _effectInstances[effectId]->getInstancedEffect(this->_materialName[materialId]);
           std::map<std::string, GLTF::Texture*> textureMapping =
               _effectTextureMapping[effectId];
           // Assign maps
@@ -1120,8 +1122,13 @@ bool COLLADA2GLTF::Writer::writeGeometry(const COLLADAFW::Geometry* geometry) {
 }
 
 bool COLLADA2GLTF::Writer::writeMaterial(const COLLADAFW::Material* material) {
-  this->_materialEffects[material->getUniqueId()] =
-      material->getInstantiatedEffect();
+  // this->_materialEffects[material->getUniqueId()] =
+  //     material->getInstantiatedEffect();
+  auto id = material->getUniqueId();
+	this->_materialEffects[id] = material->getInstantiatedEffect();
+	this->_materialName[id] = material->getName();
+
+	// TODO - read Material setting and properly apply to effect Instance
   return true;
 }
 
